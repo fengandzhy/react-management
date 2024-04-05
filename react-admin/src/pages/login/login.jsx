@@ -11,11 +11,17 @@ import {
     UserOutlined,
     LockOutlined,
 } from '@ant-design/icons';
+import './login.less';
+const Item = Form.Item;
+
 
 /**
  * 登录路由组件
  * */
 export default class Login extends Component {
+    handleSubmit = (event) => {
+
+    }
     render(){
         return (
             <div className='login'>
@@ -26,12 +32,12 @@ export default class Login extends Component {
                 <section className='login-content'>
                     <h2>用户登录</h2>
                     <Form onSubmit={this.handleSubmit} className="login-form">
-                        <Form.Item>
+                        <Item>
                             <Input
                                 prefix={<UserOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
                                 placeholder="Username"
                             />
-                        </Form.Item>
+                        </Item>
                         <Form.Item>
                             <Input
                                 prefix={<LockOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
