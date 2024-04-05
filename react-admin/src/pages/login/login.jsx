@@ -24,8 +24,15 @@ const Login = () => {
      * */
     const [form] = Form.useForm();
 
+    // 表单提交且验证通过后的处理函数
     const onFinish = (values) => {
-        console.log('Received values of form: ', values);
+
+    };
+
+    // 表单提交且验证未通过后的处理函数
+    const onFinishFailed = (errorInfo) => {
+        console.log('失败:', errorInfo);
+        // 在这里可以处理提交失败的逻辑
     };
 
     const validatePwd = async (rule, value) => {
@@ -56,6 +63,7 @@ const Login = () => {
                     className="login-form"
                     initialValues={{ remember: true }}
                     onFinish={onFinish}
+                    onFinishFailed={onFinishFailed} // 可选的，处理验证失败的情况
                 >
                     <Form.Item
                         name="username"
