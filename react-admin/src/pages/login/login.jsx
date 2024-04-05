@@ -17,10 +17,29 @@ import './login.less';
  * 登录路由组件
  */
 const Login = () => {
+    /**
+     * 在const [form] = Form.useForm();这行代码中，Form.useForm()返回一个包含单个form实例的数组。
+     * 使用解构赋值的方式，我们直接从返回的数组中提取出第一个元素，并将其赋值给变量form。
+     * 这样做的目的是为了简化代码和提高可读性。
+     * */
     const [form] = Form.useForm();
 
     const onFinish = (values) => {
         console.log('Received values of form: ', values);
+    };
+
+    const validatePwd = async (rule, value) => {
+        console.log('validatePwd()', rule, value);
+        if (!value) {
+            return Promise.reject('密码必须输入');
+        } else if (value.length < 4) {
+            return Promise.reject('密码长度不能小于4位');
+        } else if (value.length > 12) {
+            return Promise.reject('密码长度不能大于12位');
+        } else if (!/^[a-zA-Z0-9_]+$/.test(value)) {
+            return Promise.reject('密码必须是英文、数字或下划线组成');
+        }
+        // 验证通过不需要返回任何东西
     };
 
     return (
@@ -40,16 +59,23 @@ const Login = () => {
                 >
                     <Form.Item
                         name="username"
-                        rules={[{ required: true, message: '请输入您的用户名!' }]}
+                        rules={[
+                            { required: true, whitespace: true, message: '用户名必须输入' },
+                            { min: 4, message: '用户名至少4位' },
+                            { max: 12, message: '用户名最多12位' },
+                            { pattern: /^[a-zA-Z0-9_]+$/, message: '用户名必须是英文、数字或下划线组成' },
+                        ]}
                     >
-                        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="用户名" />
+                        <Input prefix={<UserOutlined className="item-icon" />} placeholder="用户名" />
                     </Form.Item>
                     <Form.Item
                         name="password"
-                        rules={[{ required: true, message: '请输入您的密码!' }]}
+                        rules={[
+                            { validator: validatePwd, }
+                        ]}
                     >
                         <Input
-                            prefix={<LockOutlined className="site-form-item-icon" />}
+                            prefix={<LockOutlined className="item-icon" />}
                             type="password"
                             placeholder="密码"
                         />
