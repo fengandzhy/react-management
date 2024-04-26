@@ -25,9 +25,14 @@ const Login = () => {
      * */
     const [form] = Form.useForm();
 
+    /**
+     * Ant Design 从版本4.0开始引入了onFinish和onFinishFailed作为Form组件的属性。
+     * onFinish用于表单验证成功并提交时的回调，而onFinishFailed用于表单验证失败时的回调处理。
+     * */
     // 表单提交且验证通过后的处理函数
     const onFinish = (values) => {
-        reqLogin();
+        const {username,password} = values;
+        reqLogin(username,password);
     };
 
     // 表单提交且验证未通过后的处理函数
