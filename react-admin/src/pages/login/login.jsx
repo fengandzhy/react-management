@@ -12,6 +12,7 @@ import {
     LockOutlined,
 } from '@ant-design/icons';
 import './login.less';
+import {reqLogin} from '../../api';
 
 /**
  * 登录路由组件
@@ -26,7 +27,7 @@ const Login = () => {
 
     // 表单提交且验证通过后的处理函数
     const onFinish = (values) => {
-
+        reqLogin();
     };
 
     // 表单提交且验证未通过后的处理函数
