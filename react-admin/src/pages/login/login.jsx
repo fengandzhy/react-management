@@ -4,7 +4,7 @@ import logo from './images/logo.png';
 import {
     Form,
     Input,
-    Button
+    Button, message
 } from 'antd';
 
 import {
@@ -12,12 +12,14 @@ import {
     LockOutlined,
 } from '@ant-design/icons';
 import './login.less';
+import { useHistory } from 'react-router-dom';
 import {reqLogin} from '../../api';
 
 /**
  * 登录路由组件
  */
 const Login = () => {
+    const history = useHistory(); // Use the useHistory hook to get access to the history instance
     /**
      * 在const [form] = Form.useForm();这行代码中，Form.useForm()返回一个包含单个form实例的数组。
      * 使用解构赋值的方式，我们直接从返回的数组中提取出第一个元素，并将其赋值给变量form。
@@ -33,7 +35,13 @@ const Login = () => {
     const onFinish = async (values) => {
         const {username,password} = values;
         const response = await reqLogin(username, password);
-        console.log(response);
+        if(response.status === 0 ){
+            message.success('login success!');
+            history.replace('/'); // Use history.replace instead of this.props.history.replace
+            // this.props.history.replace('/')
+        } else {
+            message.error(response.msg);
+        }
     };
 
     // 表单提交且验证未通过后的处理函数
