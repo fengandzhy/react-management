@@ -32,17 +32,8 @@ const Login = () => {
     // 表单提交且验证通过后的处理函数
     const onFinish = async (values) => {
         const {username,password} = values;
-        try {
-            const response = await reqLogin(username, password);
-            console.log(response);
-        } catch (error) {
-            // 处理错误
-        }
-        // reqLogin(username,password).then((response)=>{
-        //     console.log(response);
-        // }).catch((error) =>{
-        //
-        // });
+        const response = await reqLogin(username, password);
+        console.log(response);
     };
 
     // 表单提交且验证未通过后的处理函数

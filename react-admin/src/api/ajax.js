@@ -11,15 +11,15 @@ export default function ajax(url, data={}, type='GET') {
                 params: data // 指定请求参数
             })
         } else { // 发POST请求
-            promise = axios.post(url, data)
+            promise = axios.post(url, data);
         }
         // 2. 如果成功了, 调用resolve(value)
         promise.then(response => {
-            resolve(response.data)
+            resolve(response.data);
             // 3. 如果失败了, 不调用reject(reason), 而是提示异常信息
         }).catch(error => {
             // reject(error)
-            message.error('请求出错了: ' + error.message)
+            message.error('request error: ' + error.message); // 这里是统一处理异常的
         })
     });
 }
