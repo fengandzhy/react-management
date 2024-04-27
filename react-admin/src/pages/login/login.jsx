@@ -4,7 +4,7 @@ import logo from './images/logo.png';
 import {
     Form,
     Input,
-    Button
+    Button, message
 } from 'antd';
 
 import {
@@ -12,11 +12,14 @@ import {
     LockOutlined,
 } from '@ant-design/icons';
 import './login.less';
+import { useHistory } from 'react-router-dom';
+import {reqLogin} from '../../api';
 
 /**
  * 登录路由组件
  */
 const Login = () => {
+    const history = useHistory(); // Use the useHistory hook to get access to the history instance
     /**
      * 在const [form] = Form.useForm();这行代码中，Form.useForm()返回一个包含单个form实例的数组。
      * 使用解构赋值的方式，我们直接从返回的数组中提取出第一个元素，并将其赋值给变量form。
@@ -24,9 +27,21 @@ const Login = () => {
      * */
     const [form] = Form.useForm();
 
+    /**
+     * Ant Design 从版本4.0开始引入了onFinish和onFinishFailed作为Form组件的属性。
+     * onFinish用于表单验证成功并提交时的回调，而onFinishFailed用于表单验证失败时的回调处理。
+     * */
     // 表单提交且验证通过后的处理函数
-    const onFinish = (values) => {
-
+    const onFinish = async (values) => {
+        const {username,password} = values;
+        const response = await reqLogin(username, password);
+        if(response.status === 0 ){
+            message.success('login success!');
+            history.replace('/'); // Use history.replace instead of this.props.history.replace
+            // this.props.history.replace('/')
+        } else {
+            message.error(response.msg);
+        }
     };
 
     // 表单提交且验证未通过后的处理函数
@@ -36,7 +51,7 @@ const Login = () => {
     };
 
     const validatePwd = async (rule, value) => {
-        console.log('validatePwd()', rule, value);
+        // console.log('validatePwd()', rule, value);
         if (!value) {
             return Promise.reject('密码必须输入');
         } else if (value.length < 4) {
