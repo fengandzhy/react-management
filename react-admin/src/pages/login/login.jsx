@@ -32,7 +32,12 @@ const Login = () => {
     // 表单提交且验证通过后的处理函数
     const onFinish = (values) => {
         const {username,password} = values;
-        reqLogin(username,password);
+        console.log(values);
+        reqLogin(username,password).then((response)=>{
+
+        }).catch((error) =>{
+
+        });
     };
 
     // 表单提交且验证未通过后的处理函数
@@ -42,7 +47,7 @@ const Login = () => {
     };
 
     const validatePwd = async (rule, value) => {
-        console.log('validatePwd()', rule, value);
+        // console.log('validatePwd()', rule, value);
         if (!value) {
             return Promise.reject('密码必须输入');
         } else if (value.length < 4) {
