@@ -30,14 +30,19 @@ const Login = () => {
      * onFinish用于表单验证成功并提交时的回调，而onFinishFailed用于表单验证失败时的回调处理。
      * */
     // 表单提交且验证通过后的处理函数
-    const onFinish = (values) => {
+    const onFinish = async (values) => {
         const {username,password} = values;
-        console.log(values);
-        reqLogin(username,password).then((response)=>{
-
-        }).catch((error) =>{
-
-        });
+        try {
+            const response = await reqLogin(username, password);
+            console.log(response);
+        } catch (error) {
+            // 处理错误
+        }
+        // reqLogin(username,password).then((response)=>{
+        //     console.log(response);
+        // }).catch((error) =>{
+        //
+        // });
     };
 
     // 表单提交且验证未通过后的处理函数
