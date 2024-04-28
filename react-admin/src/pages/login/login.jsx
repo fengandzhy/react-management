@@ -38,7 +38,6 @@ const Login = () => {
         if(response.status === 0 ){
             message.success('login success!');
             history.replace('/'); // Use history.replace instead of this.props.history.replace
-            // this.props.history.replace('/')
         } else {
             message.error(response.msg);
         }
