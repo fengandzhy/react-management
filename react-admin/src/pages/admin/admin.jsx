@@ -26,8 +26,8 @@ const Admin = () => {
             </Sider>
             <Layout>
                 <Header>Header</Header>
-                <Content>Content</Content>
-                <Footer>Footer</Footer>
+                <Content style={{backgroundColor:'#fff'}}>Content</Content>
+                <Footer style={{textAlign:'center', color:'#ccc'}}>For a better browsing experience, the Google Chrome is recommended.</Footer>
             </Layout>
         </Layout>
     );
