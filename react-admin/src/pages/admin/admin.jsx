@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import memoryUtils from "../../utils/memoryUtils";
+import {Redirect, Route, Switch} from 'react-router-dom'
+import { Layout } from 'antd'
+const { Header,Footer, Sider, Content } = Layout
 
 const Admin = () => {
     const user = memoryUtils.user; // 将用户状态获取移动到更早，以确保在任何逻辑处理前就已经定义
@@ -15,7 +18,14 @@ const Admin = () => {
 
     // 渲染部分仅在有用户信息时进行
     return (
-        <div>Hello, {user ? user.username : 'Guest'}</div> // 使用条件渲染以处理用户信息未加载的情况
+        <Layout style={{height: '100%' }}>
+            <Sider>Sider</Sider>
+            <Layout>
+                <Header>Header</Header>
+                <Content>Content</Content>
+                <Footer>Footer</Footer>
+            </Layout>
+        </Layout>
     );
 };
 
