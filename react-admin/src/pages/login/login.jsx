@@ -14,18 +14,26 @@ import {
 import './login.less';
 import { useHistory } from 'react-router-dom';
 import {reqLogin} from '../../api';
-
+import storageUtils from "../../utils/storageUtils";
+import memoryUtils from "../../utils/memoryUtils";
 /**
  * 登录路由组件
  */
 const Login = () => {
+
     const history = useHistory(); // Use the useHistory hook to get access to the history instance
+
     /**
      * 在const [form] = Form.useForm();这行代码中，Form.useForm()返回一个包含单个form实例的数组。
      * 使用解构赋值的方式，我们直接从返回的数组中提取出第一个元素，并将其赋值给变量form。
      * 这样做的目的是为了简化代码和提高可读性。
      * */
     const [form] = Form.useForm();
+
+    const user = memoryUtils.user
+    if(user && user._id) {
+        history.replace('/');
+    }
 
     /**
      * Ant Design 从版本4.0开始引入了onFinish和onFinishFailed作为Form组件的属性。
@@ -37,8 +45,10 @@ const Login = () => {
         const response = await reqLogin(username, password);
         if(response.status === 0 ){
             message.success('login success!');
+            const user = response.data;
+            memoryUtils.user = user // 保存在内存中
+            storageUtils.saveUser(user);
             history.replace('/'); // Use history.replace instead of this.props.history.replace
-            // this.props.history.replace('/')
         } else {
             message.error(response.msg);
         }
