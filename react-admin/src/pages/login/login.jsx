@@ -14,7 +14,8 @@ import {
 import './login.less';
 import { useHistory } from 'react-router-dom';
 import {reqLogin} from '../../api';
-
+import storageUtils from "../../utils/storageUtils";
+import memoryUtils from "../../utils/memoryUtils";
 /**
  * 登录路由组件
  */
@@ -37,6 +38,9 @@ const Login = () => {
         const response = await reqLogin(username, password);
         if(response.status === 0 ){
             message.success('login success!');
+            const user = response.data;
+            memoryUtils.user = user // 保存在内存中
+            storageUtils.saveUser(user);
             history.replace('/'); // Use history.replace instead of this.props.history.replace
         } else {
             message.error(response.msg);
